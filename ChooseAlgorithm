@@ -1,0 +1,267 @@
+# Bubble Sort
+
+package com.felight.java.sort;
+
+public class BubbleSort implements SortingAlgorithm {
+
+	public void sort(int[] array) {
+
+		long startTime = System.currentTimeMillis();
+
+		for (int m = array.length; m >= 0; m--) {
+			for (int i = 0; i < array.length - 1; i++) {
+				int j = i + 1;
+				if (array[i] > array[j]) {
+					swapNumbers(i, j, array);
+				}
+			}
+		}
+		long stopTime = System.currentTimeMillis();
+		long time = stopTime - startTime;
+		System.out.println("Bubble sort completed in " + time + " ms");
+
+	}
+
+	private static void swapNumbers(int i, int j, int[] array) {
+
+		int num;
+		num = array[i];
+		array[i] = array[j];
+		array[j] = num;
+	}
+ 
+}
+
+# Heap Sort
+
+package com.felight.java.sort;
+
+public class HeapSort implements SortingAlgorithm {
+	
+	private int[] a;
+    private int n;
+    private int left;
+    private int right;
+    private int largest;
+
+    
+    public void buildheap(int[] a){
+        n=a.length-1;
+        for(int i=n/2;i>=0;i--){
+            maxheap(a,i);
+        }
+    }
+    
+    public void maxheap(int[] a, int i){ 
+        left=2*i;
+        right=2*i+1;
+        if(left <= n && a[left] > a[i])
+            largest=left;
+        else
+            largest=i;
+        
+        if(right <= n && a[right] > a[largest])
+            largest=right;
+   
+        if(largest!=i){
+            exchange(i,largest);
+            maxheap(a,largest);
+        }
+    }
+    
+    public void exchange(int i, int j){
+        int t=a[i];
+        a[i]=a[j];
+        a[j]=t; 
+    }
+    
+    public void sort(int[] array){
+    	long startTime = System.currentTimeMillis();
+        a=array;
+        buildheap(a);
+        
+        for(int i=n;i>0;i--){
+            exchange(0, i);
+            n=n-1;
+            maxheap(a, 0);
+        }
+        
+        long stopTime = System.currentTimeMillis();
+        long time = stopTime - startTime;
+        System.out.println("Heap sort completed in " + time + " ms");
+        
+    }
+    
+}
+
+# Insertion Sort
+
+package com.felight.java.sort;
+
+public class InsertionSort implements SortingAlgorithm {
+
+	public void sort(int[] array) {
+
+		int num;
+		long startTime = System.currentTimeMillis();
+		for (int i = 1; i < array.length; i++) {
+			for (int j = i; j > 0; j--) {
+				if (array[j] < array[j - 1]) {
+					num = array[j];
+					array[j] = array[j - 1];
+					array[j - 1] = num;
+				}
+			}
+		}
+		long stopTime = System.currentTimeMillis();
+		long time = stopTime - startTime;
+		System.out.println("Insertion sort completed in " + time + " ms");
+	}
+
+}
+
+# Merge Sort
+
+package com.felight.java.sort;
+
+public class MergeSort implements SortingAlgorithm {
+	
+	private int[] array;
+    private int[] mergeArray;
+    private int length;
+ 
+    public void sort(int[] array) {
+    	long startTime = System.currentTimeMillis();
+        this.array = array;
+        this.length = array.length;
+        this.mergeArray = new int[length];
+        merge(0, length - 1);
+        long stopTime = System.currentTimeMillis();
+		long time = stopTime - startTime;
+		System.out.println("Merge sort completed in "+ time +" ms");
+	    }
+ 
+    public void merge(int lowerIndex, int higherIndex) {
+         
+        if (lowerIndex < higherIndex) {
+            int middle = lowerIndex + (higherIndex - lowerIndex) / 2;
+           
+            merge(lowerIndex, middle); // Sorts the left side of the array
+            merge(middle + 1, higherIndex);// Sorts the right side of the array
+            
+            // Now merge both sides
+            mergeParts(lowerIndex, middle, higherIndex);
+        }
+    }
+ 
+    public void mergeParts(int lowerIndex, int middle, int higherIndex) {
+ 
+        for (int i = lowerIndex; i <= higherIndex; i++) {
+            mergeArray[i] = array[i];
+        }
+        int i = lowerIndex;
+        int j = middle + 1;
+        int k = lowerIndex;
+        while (i <= middle && j <= higherIndex) {
+            if (mergeArray[i] <= mergeArray[j]) {
+                array[k] = mergeArray[i];
+                i++;
+            } else {
+                array[k] = mergeArray[j];
+                j++;
+            }
+            k++;
+        }
+        while (i <= middle) {
+            array[k] = mergeArray[i];
+            k++;
+            i++;
+        }
+ 
+    }
+}
+
+# Quick Sort
+
+package com.felight.java.sort;
+
+public class QuickSort implements SortingAlgorithm {
+	
+	private int array[];
+    private int length;
+ 
+    public void sort(int[] array) {
+    	long startTime = System.currentTimeMillis();
+         
+        if (array == null || array.length == 0) {
+            return;
+        }
+        this.array = array;
+        length = array.length;
+        quick(0, length - 1);
+        long stopTime = System.currentTimeMillis();
+        long time = stopTime - startTime;
+        System.out.println("Quick sort completed in "+ time +" ms");
+    }
+ 
+    private void quick(int lowerIndex, int higherIndex) {
+         
+        int i = lowerIndex;
+        int j = higherIndex;
+        
+        int index = array[lowerIndex+(higherIndex-lowerIndex)/2];
+        
+        while (i <= j) {
+            while (array[i] < index) {
+                i++;
+            }
+            while (array[j] > index) {
+                j--;
+            }
+            if (i <= j) {
+                exchangeNumbers(i, j);
+                i++;
+                j--;
+            }
+        }
+      
+        if (lowerIndex < j)
+            quick(lowerIndex, j);
+        if (i < higherIndex)
+            quick(i, higherIndex);
+    }
+ 
+    private void exchangeNumbers(int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+     
+}
+
+# Selection Sort
+
+package com.felight.java.sort;
+
+public class SelectionSort implements SortingAlgorithm {
+
+	public void sort(int[] array) {
+		long startTime = System.currentTimeMillis();
+		for (int i = 0; i < array.length - 1; i++) {
+			int index = i;
+			for (int j = i + 1; j < array.length; j++)
+				if (array[j] < array[index])
+					index = j;
+
+			int smallerNumber = array[index];
+			array[index] = array[i];
+			array[i] = smallerNumber;
+		}
+		long stopTime = System.currentTimeMillis();
+		long time = stopTime - startTime;
+		System.out.println("Selection sort completed in "+ time +" ms");
+	    
+	}
+
+}
+
