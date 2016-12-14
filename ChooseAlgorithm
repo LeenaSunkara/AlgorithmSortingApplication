@@ -265,3 +265,33 @@ public class SelectionSort implements SortingAlgorithm {
 
 }
 
+# Benchmark All
+
+package com.felight.java.sort;
+
+public class BenchmarkAll {
+
+	public void benchmark(int[] array) {
+		
+		BubbleSort bubbleSort = new BubbleSort();
+		bubbleSort.sort(array);
+		
+		HeapSort heapSort = new HeapSort();
+		heapSort.sort(array);
+		
+		InsertionSort insertionSort = new InsertionSort();
+		insertionSort.sort(array);
+		
+		MergeSort mergeSort = new MergeSort();
+		mergeSort.sort(array);
+		
+		QuickSort quickSort = new QuickSort();
+		quickSort.sort(array);
+		
+		SelectionSort selectionSort = new SelectionSort();
+		selectionSort.sort(array);		
+
+	}
+
+}
+
