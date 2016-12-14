@@ -1,2 +1,2 @@
 # AlgorithmSortingApplication
-A Project which the time taken by some sorting techni
+A Project which gives the time taken by the sorting techniques
